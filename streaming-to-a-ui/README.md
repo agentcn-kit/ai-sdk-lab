@@ -2,6 +2,11 @@
 
 Simple chat experience that streams Anthropic responses into the UI using the Vercel AI SDK, with a custom prompt that keeps the bot talking like a pirate.
 
+
+https://github.com/user-attachments/assets/d76e3393-411d-4dc7-a2c6-15ac1e282f4c
+
+
+
 ## How it works (quick tour)
 
 - `app/page.tsx` – client page using `useChat` to manage state and send messages. UI supports file selection (not yet forwarded to the API) and a compact composer with enter-to-send UX.
