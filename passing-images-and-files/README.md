@@ -2,7 +2,9 @@
 
 A modern, streaming chat application that demonstrates **multi-modal capabilities** (text, images, and files) using the [Vercel AI SDK](https://sdk.vercel.ai/docs) and [Anthropic Claude 3.5 Haiku](https://docs.anthropic.com/en/docs/models-overview).
 
-The application features a polished UI with a custom prompt input, file attachments, and a pirate-themed system prompt to keep things entertaining.
+
+https://github.com/user-attachments/assets/329a37d3-a3ef-40b5-a6ab-5fd4e4c17a36
+
 
 ## Features
 
