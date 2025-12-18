@@ -13,7 +13,7 @@ import { Message } from "@/components/message";
 import { useChat } from "@ai-sdk/react";
 
 const Home: React.FC = () => {
-  const [input, setInput] = useState("Could you describe this image?");
+  const [input, setInput] = useState("Create a todo list and add these list items: \n - Buy groceries \n - Buy milk \n - Buy bread");
   const [files, setFiles] = useState<File[]>([]);
   const uploadInputRef = useRef<HTMLInputElement | null>(null);
 
@@ -93,10 +93,10 @@ const Home: React.FC = () => {
         {isEmpty ? (
           <header className="space-y-4 text-center">
             <p className="text-slate-600 text-sm uppercase tracking-[0.3em]">
-              Vercel AI SDK • Streaming demo
+              Vercel AI SDK • File System Agent demo
             </p>
             <h1 className="font-semibold text-4xl text-slate-900 sm:text-5xl">
-             Chat with text, images, and files <br /> with full streaming responses.
+             Chat with files <br />to perform file operations
             </h1>
             <div className="flex items-center justify-center gap-3 text-slate-600 text-xs">
               <span className="rounded-full border border-slate-300 px-3 py-1">

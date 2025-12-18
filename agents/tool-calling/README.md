@@ -1,47 +1,40 @@
-# Passing Images & Files (Next.js 16 + Vercel AI SDK)
+# File System Agent (Next.js 16 + Vercel AI SDK)
 
-A modern, streaming chat application that demonstrates **multi-modal capabilities** (text, images, and files) using the [Vercel AI SDK](https://sdk.vercel.ai/docs) and [Anthropic Claude 3.5 Haiku](https://docs.anthropic.com/en/docs/models-overview).
-
-
-https://github.com/user-attachments/assets/329a37d3-a3ef-40b5-a6ab-5fd4e4c17a36
-
+A fully autonomous **File System Agent** that can create, edit, read, and manage files in a sandboxed environment. Built with the [Vercel AI SDK](https://sdk.vercel.ai/docs) and [Anthropic Claude 3.5 Haiku](https://docs.anthropic.com/en/docs/models-overview).
 
 ## Features
 
-- **Multi-modal Chat**: Send text, images, and files in a single message.
-- **Streaming Responses**: Real-time text streaming from the LLM.
-- **Custom Input Component**: A reusable, auto-resizing textarea with file attachment support (`PromptInput`).
-- **Modern UI**: Built with Tailwind CSS, customized with animations (shimmer, glow) and a clean design.
-- **Pirate Persona**: The default system prompt instructs the model to speak like a pirate (customizable).
-- **Next.js 16**: Leveraging the latest Next.js features and App Router.
+- **Autonomous Agent Loop**: Uses `stopWhen: [stepCountIs(10)]` to allow the agent to "think, act, and observe" in a loop, enabling multi-step tasks like "Create a file and then verify its contents".
+- **File System Toolset**: A sandboxed toolset giving the agent capabilities to:
+  - `writeFile` / `readFile`
+  - `listDirectory` / `createDirectory`
+  - `deletePath` / `exists`
+  - `searchFiles`
+
+- **Modern UI**: Streaming chat interface with drag-and-drop file attachment support.
 
 ## Tech Stack
 
 - **Framework**: [Next.js 16](https://nextjs.org/) (App Router)
-- **AI SDK**: [Vercel AI SDK (Core + React)](https://sdk.vercel.ai/docs) 
+- **AI SDK**: [Vercel AI SDK (Core + React)](https://sdk.vercel.ai/docs)
 - **Model Provider**: [Anthropic](https://anthropic.com) (`claude-3-5-haiku-20241022`)
+- **Agent Architecture**: Feature-based agent separation (`agents/file-agent`) logic vs. API routes (`app/api/chat`).
 - **Styling**: [Tailwind CSS](https://tailwindcss.com/) + `tailwindcss-animate`
-- **Icons**: [Lucide React](https://lucide.dev/)
 - **Linting/Formatting**: [Biome](https://biomejs.dev/)
 
 ## File Structure & How it Works
 
-### Frontend (`app/page.tsx`)
-- Uses the `useChat` hook from `@ai-sdk/react` to manage chat state.
-- Handles file selection via `FileReader` to convert files to Data URLs.
-- Constructs multi-modal messages by defining `parts` (text parts and file parts) before sending them via `sendMessage`.
-- Displays attached files with previews and removal options.
+### Agent Logic (`agents/file-agent/`)
+- **`agent.ts`**: The "Brain". Configures the model, tools, and the critical **agent loop** (via `stopWhen`).
+- **`prompt.ts`**: Defines "Cadi", the system persona, ensuring the agent behaves like a helpful file management expert.
+- **`index.ts`**: Helper exports.
 
-### Backend (`app/api/chat/route.ts`)
-- An Edge-compatible Route Handler that receives the chat history.
-- Uses `convertToModelMessages` to standardise the incoming messages (including file attachments) for the model.
-- Calls `streamText` with the Anthropic provider.
-- Streams the response back to the client using `createUIMessageStreamResponse`.
+### Tools (`tools/file-system/`)
+- Contains the Zod-schema definitions and implementation for all file system operations.
 
-### Components
-- **`components/ui/prompt-input.tsx`**: A sophisticated input component that handles auto-resizing, file attachments, and loading states. It uses a context-based approach for flexibility.
-- **`components/message.tsx`**: Renders the chat messages, supporting markdown rendering via `react-markdown`.
-- **`prompts/prompts.ts`**: Contains the system prompt (Pirate persona).
+### API (`app/api/chat/route.ts`)
+- Serves as the interface between the frontend and the agent.
+- Receives messages, calls `fileAgent(messages)`, and streams the result back.
 
 ## Prerequisites
 
@@ -51,10 +44,10 @@ https://github.com/user-attachments/assets/329a37d3-a3ef-40b5-a6ab-5fd4e4c17a36
 
 ## Setup & Running Locally
 
-1. **Clone the repository** (if you haven't already):
+1. **Clone the repository**:
    ```bash
    git clone <your-repo-url>
-   cd passing-images-and-files
+   cd tool-calling
    ```
 
 2. **Install dependencies**:
@@ -63,7 +56,7 @@ https://github.com/user-attachments/assets/329a37d3-a3ef-40b5-a6ab-5fd4e4c17a36
    ```
 
 3. **Configure Environment Variables**:
-   Create a `.env.local` file in the root directory and add your Anthropic API key:
+   Create a `.env.local` file in the root directory:
    ```bash
    ANTHROPIC_API_KEY=your_key_here
    ```
@@ -77,35 +70,10 @@ https://github.com/user-attachments/assets/329a37d3-a3ef-40b5-a6ab-5fd4e4c17a36
 ## key Commands
 
 | Command | Description |
-| copy | data |
-| `pnpm dev` | Start development server with Turbopack |
-| `pnpm build` | Build for production |
-| `pnpm start` | Start production server |
+| --- | --- |
+| `pnpm dev` | Start development server |
 | `pnpm lint` | Check code quality with Biome |
 | `pnpm format` | Auto-format code with Biome |
-| `pnpm clean` | Remove `.next`, `.turbo`, and `node_modules` |
-
-## Customization
-
-### Changing the Model
-To use a different model (e.g., GPT-4o or a different Claude model), update `app/api/chat/route.ts`:
-
-```typescript
-import { openai } from "@ai-sdk/openai";
-
-// ... inside POST function
-const streamTextResult = streamText({
-  model: openai("gpt-4o"), // or anthropic("claude-3-5-sonnet-20240620")
-  messages: modelMessages,
-});
-```
-
-### Changing the Persona
-Edit `prompts/prompts.ts` to change the `SYSTEM_PROMPT`.
-
-```typescript
-export const SYSTEM_PROMPT = `You are a helpful coding assistant.`;
-```
 
 ## License
 

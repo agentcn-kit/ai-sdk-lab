@@ -1,29 +1,14 @@
-import { anthropic } from "@ai-sdk/anthropic";
-import {
-	type ModelMessage,
-	type UIMessage,
-	convertToModelMessages,
-	createUIMessageStreamResponse,
-	streamText,
-} from "ai";
+import { type ModelMessage, type UIMessage, convertToModelMessages } from "ai";
 import { type NextRequest } from "next/server";
-
-import { SYSTEM_PROMPT } from "@/prompts/prompts";
+import { fileAgent } from "@/agents/file-agent";
 
 export async function POST(request: NextRequest) {
-	const body = await request.json();
+  const body = await request.json();
 
-	const messages: UIMessage[] = body.messages;
+  const messages: UIMessage[] = body.messages;
+  const modelMessages: ModelMessage[] = convertToModelMessages(messages);
 
-	const modelMessages: ModelMessage[] = convertToModelMessages(messages);
+  const result = fileAgent(modelMessages);
 
-	const streamTextResult = streamText({
-		model: anthropic("claude-3-5-haiku-20241022"),
-		messages: modelMessages,
-		system: SYSTEM_PROMPT,
-	});
-	const stream = streamTextResult.toUIMessageStream();
-	return createUIMessageStreamResponse({
-		stream,
-	});
+  return result.toUIMessageStreamResponse();
 }
