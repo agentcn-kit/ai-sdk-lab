@@ -1,4 +1,4 @@
-import { tool } from "ai";
+import { tool, ToolSet } from "ai";
 import * as fs from "./core";
 import {
   writeFileSchema,
@@ -52,4 +52,4 @@ export const fileSystemToolset = {
     inputSchema: searchFilesSchema,
     execute: ({ pattern }) => fs.searchFiles(pattern),
   }),
-};
+}as ToolSet;
