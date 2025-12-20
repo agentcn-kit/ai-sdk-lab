@@ -11,9 +11,10 @@ import React, { type ChangeEvent, useRef, useState } from "react";
 
 import { Message } from "@/components/message";
 import { useChat } from "@ai-sdk/react";
+import { cn } from "@/lib/utils";
 
 const Home: React.FC = () => {
-  const [input, setInput] = useState("Create a todo list and add these list items: \n - Buy groceries \n - Buy milk \n - Buy bread");
+  const [input, setInput] = useState("Check a todo list and add these list items: \n - Buy Vegetables \n - Buy milk \n - Buy Kushpush");
   const [files, setFiles] = useState<File[]>([]);
   const uploadInputRef = useRef<HTMLInputElement | null>(null);
 
@@ -36,7 +37,7 @@ const Home: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
+setInput("");
     const text = input?.trim();
     if (!text && files.length === 0) return;
 
@@ -88,7 +89,12 @@ const Home: React.FC = () => {
 
   return (
     <main className="min-h-screen bg-gradient-to-b from-slate-50 via-white to-slate-50 text-slate-900">
-      <div className="mx-auto flex min-h-screen max-w-4xl flex-col items-center justify-start gap-12 px-6 pt-24 pb-16">
+      <div
+        className={cn(
+          "mx-auto flex h-screen max-w-3xl flex-col items-center px-4 pb-12",
+          isEmpty ? "justify-center gap-12" : "justify-between gap-3"
+        )}
+      >
         {/* Header (empty-state) or Messages */}
         {isEmpty ? (
           <header className="space-y-4 text-center">
@@ -108,9 +114,9 @@ const Home: React.FC = () => {
           // Messages container
           <section
             aria-live="polite"
-            className="w-full max-w-2xl rounded-lg border border-slate-100 bg-white p-4 shadow-sm"
+            className="flex-1 w-full max-w-3xl overflow-y-auto py-14"
           >
-            <div className="max-h-[55vh] space-y-3 overflow-y-auto pr-2">
+            <div className="space-y-4">
               {messages.map((message) => (
                 <Message
                   key={message.id}

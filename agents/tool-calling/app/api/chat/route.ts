@@ -1,6 +1,7 @@
-import { type ModelMessage, type UIMessage, convertToModelMessages } from "ai";
+import { InferUITools, type ModelMessage, type UIMessage, convertToModelMessages } from "ai";
 import { type NextRequest } from "next/server";
 import { fileAgent } from "@/agents/file-agent";
+
 
 export async function POST(request: NextRequest) {
   const body = await request.json();
