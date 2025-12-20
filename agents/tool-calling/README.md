@@ -3,7 +3,11 @@
 A fully autonomous **File System Agent** that can create, edit, read, and manage files in a sandboxed environment. Built with the [Vercel AI SDK](https://sdk.vercel.ai/docs) and [Anthropic Claude 3.5 Haiku](https://docs.anthropic.com/en/docs/models-overview).
 
 
-https://github.com/user-attachments/assets/a2fcebf9-515c-492f-a079-4ea9824e2913
+
+
+https://github.com/user-attachments/assets/e9a8f710-9583-4956-b8d1-8dcc89c75e86
+
+
 
 
 ## Features
