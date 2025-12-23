@@ -2,7 +2,9 @@
 
 A powerful **Hybrid Agent** that combines local file system control with **GitHub MCP** capabilities. This project demonstrates how to use the [Vercel AI SDK's](https://sdk.vercel.ai/docs) experimental MCP (Model Context Protocol) support to bridge local tools and remote MCP servers (running via Docker) in a single autonomous agent.
 
-Powered by [Anthropic Claude 3.5 Haiku](https://docs.anthropic.com/en/docs/models-overview).
+https://github.com/user-attachments/assets/a691336e-f6e6-43d1-a82f-cc34966f724b
+
+
 
 ## Features
 
