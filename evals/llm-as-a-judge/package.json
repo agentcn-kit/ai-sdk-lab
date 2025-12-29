@@ -1,0 +1,29 @@
+{
+  "name": "llm-fundamentals",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "eval:dev": " evalite watch",
+    "start": "ts-node src/main.ts",
+    "clean": "rm -rf node_modules"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "devDependencies": {
+    "@types/node": "^25.0.1",
+    "autoevals": "^0.0.131",
+    "dotenv": "^17.2.3",
+    "evalite": "^0.19.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.16"
+  },
+  "dependencies": {
+    "@ai-sdk/anthropic": "^2.0.53",
+    "ai": "^5.0.82"
+  }
+}
